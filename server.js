@@ -1,8 +1,8 @@
 //// Dependencies/////
-// const express = require( 'express' );
-// const inquirer = require('inquirer');
-// const mysqlConnect = require('./db/connect')
-// const consoleTable = require('console.table')
+const express = require( 'express' );
+const inquirer = require('inquirer');
+const mysqlConnect = require('./db/connect')
+const consoleTable = require('console.table')
 
 
 ///// Init Server & middle Ware ////
