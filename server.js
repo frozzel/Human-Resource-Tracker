@@ -1,9 +1,11 @@
 //// Dependencies/////
 const express = require( 'express' );
 const inquirer = require('inquirer');
-const mysqlConnect = require('./db/connect')
+const mysqlConnect = require('./db/connect');
+const empQuest = require('./lib/addEmp');
 // const consoleTable = require('console.table')
 const initQuestions= require('./lib/initQuestions')
+// const addEmp = require('./lib/addEmp')
 
 ///// Init Server & middle Ware ////
 const app = express();
@@ -39,7 +41,7 @@ function init(){
     inquirer.prompt(initQuestions).then(function (res){
         switch(res.options){
             case "Add An Employee?":
-                addEmp();
+                addNewEmp();
                 break;
             case  "Add A Role?":
                 addRole();
@@ -66,6 +68,8 @@ function init(){
     })      
     }
 
+
+///////////////////////////// Views ///////////////////////////
 function viewDept(){
     mysqlConnect.query("SELECT * FROM department;", function(err, res){
         if (err) throw err;
@@ -87,8 +91,29 @@ function veiwRoles(){
         init();
     })
 }
+///////////////// practice////////////////////////
+// mysqlConnect.query("SELECT * FROM employee;", (req, res)=> ( console.table(res)));
 
+/////////////////////// add stuff////////////////
 
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-//   });
+function addNewEmp(){
+    inquirer.prompt(empQuest)
+    .then(function(res){
+        const first_name= res.first_name;
+        const last_name= res.last_name;
+        const manager_id= res.manager_id;
+        const role_id= res.role_id;
+        const Remaining_PTO= res.Remaining_PTO;
+        const Remaining_Sick_Days= res.Remaining_Sick_Days;
+        const Hire_Date= res.Hire_Date;
+        const New_Period= res.New_Period;
+        mysqlConnect.query(`INSERT INTO employee SET ?`, {first_name, last_name, manager_id, role_id, Remaining_PTO, Remaining_Sick_Days, Hire_Date, New_Period},
+        (function(err){
+            if (err)throw err;
+            init();
+        }))
+    
+    })
+   
+}
+
