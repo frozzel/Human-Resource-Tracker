@@ -3,9 +3,10 @@ const express = require( 'express' );
 const inquirer = require('inquirer');
 const mysqlConnect = require('./db/connect');
 const empQuest = require('./lib/addEmp');
+const deptQuest = require('./lib/deptQuest');
+const roleQuest= require('./lib/roleQuest')
 // const consoleTable = require('console.table')
 const initQuestions= require('./lib/initQuestions')
-// const addEmp = require('./lib/addEmp')
 
 ///// Init Server & middle Ware ////
 const app = express();
@@ -110,6 +111,11 @@ function addNewEmp(){
         mysqlConnect.query(`INSERT INTO employee SET ?`, {first_name, last_name, manager_id, role_id, Remaining_PTO, Remaining_Sick_Days, Hire_Date, New_Period},
         (function(err){
             if (err)throw err;
+            console.log('***************************************')
+            console.log('*                                     *')
+            console.log('*           Employee Added            *')
+            console.log('*                                     *')
+            console.log('***************************************')
             init();
         }))
     
@@ -117,3 +123,43 @@ function addNewEmp(){
    
 }
 
+function addDep(){
+    inquirer.prompt(deptQuest)
+    .then(function(res){
+        const name= res.name;
+        
+        mysqlConnect.query(`INSERT INTO department SET ?`, {name},
+        (function(err){
+            if (err)throw err;
+            console.log('***************************************')
+            console.log('*                                     *')
+            console.log('*          Department Added           *')
+            console.log('*                                     *')
+            console.log('***************************************')
+            init();
+        }))
+    
+    })
+   
+}
+
+function addRole(){
+    inquirer.prompt(roleQuest)
+    .then(function(res){
+        const title= res.title;
+        const salary= res.salary;
+        const department_id= res.department_id;
+        mysqlConnect.query(`INSERT INTO roles SET ?`, {title, salary, department_id},
+        (function(err){
+            if (err)throw err;
+            console.log('***************************************')
+            console.log('*                                     *')
+            console.log('*             Role Added              *')
+            console.log('*                                     *')
+            console.log('***************************************')
+            init();
+        }))
+    
+    })
+   
+}
