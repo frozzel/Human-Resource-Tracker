@@ -2,11 +2,10 @@
 const express = require( 'express' );
 const inquirer = require('inquirer');
 const mysqlConnect = require('./db/connect');
-const empQuest = require('./lib/addEmp');
+const {empQuest, selMng, selRole} = require('./lib/addEmp');
 const deptQuest = require('./lib/deptQuest');
-const roleQuest= require('./lib/roleQuest')
-// const consoleTable = require('console.table')
-const initQuestions= require('./lib/initQuestions')
+const roleQuest= require('./lib/roleQuest');
+const initQuestions= require('./lib/initQuestions');
 
 ///// Init Server & middle Ware ////
 const app = express();
@@ -63,7 +62,13 @@ function init(){
                 updateEmp();
                 break;
             case "Exit":
-                break;
+                console.log('')
+                console.log('')
+                console.log('***************************** Thank You Have a Nice Day! ********************************')
+                console.log('')
+                console.log('')
+                process.exit();
+        
             
         }
     })      
@@ -92,18 +97,17 @@ function veiwRoles(){
         init();
     })
 }
-///////////////// practice////////////////////////
-// mysqlConnect.query("SELECT * FROM employee;", (req, res)=> ( console.table(res)));
-
 /////////////////////// add stuff////////////////
 
 function addNewEmp(){
     inquirer.prompt(empQuest)
     .then(function(res){
+        let mngId = selMng().indexOf(res.choice)+1;
+        let rolId = selRole().indexOf(res.roles)+ 1;
         const first_name= res.first_name;
         const last_name= res.last_name;
-        const manager_id= res.manager_id;
-        const role_id= res.role_id;
+        const manager_id= mngId;
+        const role_id= rolId;
         const Remaining_PTO= res.Remaining_PTO;
         const Remaining_Sick_Days= res.Remaining_Sick_Days;
         const Hire_Date= res.Hire_Date;
@@ -163,3 +167,5 @@ function addRole(){
     })
    
 }
+
+
