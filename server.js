@@ -30,7 +30,7 @@ console.log('*******************************************************************
 mysqlConnect.connect(err => {
     if (err) throw err;
     console.log('Your Now Connected!');
-    init();
+    viewEmp();
     
 
 });
@@ -66,7 +66,27 @@ function init(){
     })      
     }
 
-
+function viewDept(){
+    mysqlConnect.query("SELECT * FROM department;", function(err, res){
+        if (err) throw err;
+        console.table(res);
+        init();
+    })
+}
+function viewEmp(){
+    mysqlConnect.query("SELECT * FROM employee;", function(err, res){
+        if (err) throw err;
+        console.table(res);
+        init();
+    })
+}
+function veiwRoles(){
+    mysqlConnect.query("SELECT * FROM roles;", function(err, res){
+        if (err) throw err;
+        console.table(res);
+        init();
+    })
+}
 
 
 // app.listen(PORT, () => {
