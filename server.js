@@ -6,7 +6,7 @@ const {empQuest, selMng, selRole} = require('./lib/addEmp');
 const deptQuest = require('./lib/deptQuest');
 const roleQuest= require('./lib/roleQuest');
 const initQuestions= require('./lib/initQuestions');
-
+const updateQuest= require('./lib/empUpdateQuest');
 ///// Init Server & middle Ware ////
 const app = express();
 const PORT =  3306;
@@ -168,4 +168,11 @@ function addRole(){
    
 }
 
+////// Update Stuff ///////////////////////////
 
+function updateEmp(){
+    inquirer.prompt(updateQuest)
+    .then(function(res){
+        
+    })
+}
