@@ -25,6 +25,8 @@
   
   ## Usage
   [Vist Our Site](https://github.com/frozzel/Human-Resource-Tracker)
+
+  [Video of Site](https://youtu.be/cE3IWSmHqVU)
   
   
 ![Screen Shots](./images/Screen%20Shot%202022-10-18%20at%209.23.58%20PM.png )
