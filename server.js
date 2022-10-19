@@ -7,6 +7,8 @@ const deptQuest = require('./lib/deptQuest');
 const roleQuest= require('./lib/roleQuest');
 const initQuestions= require('./lib/initQuestions');
 const updateQuest= require('./lib/empUpdateQuest');
+
+
 ///// Init Server & middle Ware ////
 const app = express();
 const PORT =  3306;
@@ -24,6 +26,8 @@ console.log(`
 #     # #    # #    # ###### #  # #    #   #   #           # #    # #    # #####  #      #            #    #####  ###### #      #  #   #      #####  
 #     # #    # #    # #    # #   ##    #    #  #      #    # #    # #    # #   #  #    # #            #    #   #  #    # #    # #   #  #      #   #  
 #     #  ####  #    # #    # #    #    #     # ######  ####   ####   ####  #    #  ####  ######       #    #    # #    #  ####  #    # ###### #    #  
+
+
                                                                   By Dennis Hickox`)
 console.log('***************************************************************************************************************************************************');                                                                                                                                                  
 
@@ -75,7 +79,7 @@ function init(){
     }
 
 
-///////////////////////////// Views ///////////////////////////
+/////////////////////////////////////// Views ///////////////////////////
 function viewDept(){
     mysqlConnect.query("SELECT * FROM department;", function(err, res){
         if (err) throw err;
@@ -97,7 +101,7 @@ function veiwRoles(){
         init();
     })
 }
-/////////////////////// add stuff////////////////
+//////////////////////////////////////// add stuff////////////////
 
 function addNewEmp(){
     inquirer.prompt(empQuest)
@@ -168,11 +172,24 @@ function addRole(){
    
 }
 
-////// Update Stuff ///////////////////////////
+///////////////////////////////// Update Stuff ///////////////////////////
 
 function updateEmp(){
     inquirer.prompt(updateQuest)
     .then(function(res){
-        
+        mysqlConnect.query(`UPDATE employee SET role_id = 1 WHERE manager_id = 5`,
+        {
+            role_id: selRole().indexOf(res.roles)+3,
+            manager_id: selMng().indexOf(res.choice)+7,
+        },
+        (function (err) {
+            if (err)throw err;
+            console.log('***************************************')
+            console.log('*                                     *')
+            console.log('*         Employee Updated!           *')
+            console.log('*                                     *')
+            console.log('***************************************')
+            init();
+        }))
     })
 }
